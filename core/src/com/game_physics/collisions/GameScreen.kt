@@ -10,6 +10,9 @@ import com.game_physics.collisions.system.CollisionSystem
 class GameScreen(private val game: RestoringForceGame) : Screen {
     private var ball1 = Ball(30f, Color(255, 0, 0), 20f, 350f)
 
+    init {
+        println("test")
+    }
 
     private fun update(delta: Float) {
         ball1.x +=1
