@@ -12,7 +12,7 @@ class Ball(private val radius: Float, private val color: Color,var x: Float = 0.
     private var vx = 0f
     private var vy = 0f
 
-    private var con = ArrayList<Line>()
+    var con = ArrayList<Line>()
 
 
     fun updateLocation() {

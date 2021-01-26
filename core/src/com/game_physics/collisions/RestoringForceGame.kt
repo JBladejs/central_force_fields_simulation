@@ -10,6 +10,7 @@ class RestoringForceGame: Game() {
         renderer = ShapeRenderer()
         renderer.setAutoShapeType(true)
         screen = GameScreen(this)
+        //renderer.translate((640f/2),(360f/2),0f)
     }
 
     override fun dispose() {

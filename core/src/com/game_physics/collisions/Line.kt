@@ -17,6 +17,7 @@ class Line(ball1: Ball, ball2: Ball) {
     var length = 0f
         set
     var relaxLength = 100f
+    var maxLength = 1200f
 
     init {
         ball1.addCon(this)
@@ -43,6 +44,18 @@ class Line(ball1: Ball, ball2: Ball) {
             return ball2.y
         else
             return ball1.y
+    }
+
+    fun ripAppart(): Boolean
+    {
+        if(this.length>maxLength)
+        {
+            ball1.con.remove(this)
+            ball2.con.remove(this)
+            return true
+        }
+        else
+            return false
     }
 
     fun render(renderer: ShapeRenderer) {

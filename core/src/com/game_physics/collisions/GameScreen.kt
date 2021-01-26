@@ -9,15 +9,16 @@ class GameScreen(private val game: RestoringForceGame) : Screen {
 
     private var balls = ArrayList<Ball>()
     private var lines = ArrayList<Line>()
+    private var scale = 1f
 
     init {
-        balls.add(Ball(30f, Color(255, 0, 0), 20f, 350f))
-        balls.add(Ball(30f, Color(0, 255, 0), 300f, 100f))
-        balls.add(Ball(30f, Color(0, 0, 255), 600f, 500f))
-        balls.add(Ball(30f, Color(255, 255, 0), 550f, 10f))
-        balls.add(Ball(30f, Color(0, 255, 255), 1200f, 450f))
-        balls.add(Ball(30f, Color(255, 0, 255), 70f, 800f))
-        balls.add(Ball(30f, Color(255, 255, 255), 150f, 370f))
+        balls.add(Ball(30f * scale, Color(255, 0, 0), 20f * scale, 350f* scale))
+        balls.add(Ball(30f* scale, Color(0, 255, 0), 300f* scale, 100f* scale))
+        balls.add(Ball(30f* scale, Color(0, 0, 255), 600f* scale, 500f* scale))
+        balls.add(Ball(30f* scale, Color(255, 255, 0), 550f* scale, 10f* scale))
+        balls.add(Ball(30f* scale, Color(0, 255, 255), 1200f* scale, 450f* scale))
+        balls.add(Ball(30f* scale, Color(255, 0, 255), 70f* scale, 800f* scale))
+        balls.add(Ball(30f* scale, Color(255, 255, 255), 150f* scale, 370f* scale))
 
         lines.add(Line(balls[0], balls[1]))
         lines.add(Line(balls[0], balls[2]))
@@ -31,10 +32,13 @@ class GameScreen(private val game: RestoringForceGame) : Screen {
     }
 
     private fun update() {
-        for(line in lines)
+        for(i in lines.indices.reversed())
         {
-            line.lengthUpdate()
+            lines[i].lengthUpdate()
+            if(lines[i].ripAppart())
+                lines.removeAt(i)
         }
+
         for(ball in balls)
         {
             ball.updateLocation()
