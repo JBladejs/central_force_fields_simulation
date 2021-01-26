@@ -7,22 +7,38 @@ import com.badlogic.gdx.graphics.GL20
 
 class GameScreen(private val game: RestoringForceGame) : Screen {
 
-    private var ball1 = Ball(30f, Color(255, 0, 0), 20f, 350f)
-    private var ball2 = Ball(30f, Color(0, 0, 255), 300f, 100f)
-    private var line1 = Line(ball2, ball1)
+    private var balls = ArrayList<Ball>()
+    private var lines = ArrayList<Line>()
 
     init {
+        balls.add(Ball(30f, Color(255, 0, 0), 20f, 350f))
+        balls.add(Ball(30f, Color(0, 255, 0), 300f, 100f))
+        balls.add(Ball(30f, Color(0, 0, 255), 600f, 500f))
+        balls.add(Ball(30f, Color(255, 255, 0), 550f, 10f))
+        balls.add(Ball(30f, Color(0, 255, 255), 1200f, 450f))
+        balls.add(Ball(30f, Color(255, 0, 255), 70f, 800f))
+        balls.add(Ball(30f, Color(255, 255, 255), 150f, 370f))
 
-        ball1.AddCon(line1)
-
+        lines.add(Line(balls[0], balls[1]))
+        lines.add(Line(balls[0], balls[2]))
+        lines.add(Line(balls[1], balls[3]))
+        lines.add(Line(balls[3], balls[2]))
+        lines.add(Line(balls[0], balls[3]))
+        lines.add(Line(balls[4], balls[2]))
+        lines.add(Line(balls[5], balls[4]))
+        lines.add(Line(balls[4], balls[1]))
+        lines.add(Line(balls[5], balls[6]))
     }
 
     private fun update() {
-        ball1.updateLocation()
-        line1.lengthUpdate()
-        //println(line1.length)
-
-
+        for(line in lines)
+        {
+            line.lengthUpdate()
+        }
+        for(ball in balls)
+        {
+            ball.updateLocation()
+        }
     }
 
     override fun render(delta: Float) {
@@ -30,9 +46,14 @@ class GameScreen(private val game: RestoringForceGame) : Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
         with(game.renderer) {
             begin()
-            ball1.render(this)
-            ball2.render(this)
-            line1.render(this)
+            for(line in lines)
+            {
+                line.render(this)
+            }
+            for(ball in balls)
+            {
+                ball.render(this)
+            }
             end()
         }
         update()

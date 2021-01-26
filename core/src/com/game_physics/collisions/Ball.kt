@@ -1,58 +1,46 @@
 package com.game_physics.collisions
 
-import com.badlogic.gdx.Gdx
+
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
-import com.badlogic.gdx.math.MathUtils.cos
-import com.badlogic.gdx.math.MathUtils.sin
-import com.game_physics.collisions.system.CircleCollider
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.math.abs
-import kotlin.math.sqrt
 
-class Ball(val radius: Float, private val color: Color, x: Float = 0.0f, y: Float = 0.0f) {
+class Ball(private val radius: Float, private val color: Color,var x: Float = 0.0f,var y: Float = 0.0f) {
 
-    private var k = 0.01f
-    var x = x
-        set
-    var y = y
-        set
+    private var k = 0.001f
+    private var airRes = 0.999f
+    private var vx = 0f
+    private var vy = 0f
 
-    var vx = 0f
-    var vy = 0f
-
-    var Con = ArrayList<Line>()
+    private var con = ArrayList<Line>()
 
 
     fun updateLocation() {
+        for(line in con)
+        {
+            vx = vx * airRes + calcForceX(line)
+            vy = vy * airRes + calcForceY(line)
+        }
 
-        vx += calcForceX(Con[0])
-        vy += calcForceY(Con[0])
         x += vx
         y += vy
     }
 
-    fun calcForceX(line: Line): Float {
-
-        //Obliczanie |F|
-        //var moduleF = -k * line.length
+    private fun calcForceX(line: Line): Float {
         val otherX = line.getOtherEndXLocation(this)
+        val moduleF = -k*(line.length-line.relaxLength)
 
-        println(-k*(this.x-otherX))
-        return -k*(this.x-otherX)
+        return moduleF * (this.x-otherX)/line.length
     }
-    fun calcForceY(line: Line): Float {
-
-        //Obliczanie |F|
-        //var moduleF = -k * line.length
+    private fun calcForceY(line: Line): Float {
         val otherY = line.getOtherEndYLocation(this)
+        val moduleF = -k*(line.length-line.relaxLength)
 
-        println(-k*(this.y-otherY))
-        return -k*(this.y-otherY)
+        return moduleF * (this.y-otherY)/line.length
     }
 
-    fun AddCon(line: Line) {
-        Con.add(line)
+    fun addCon(line: Line) {
+        con.add(line)
     }
 
     fun render(renderer: ShapeRenderer) {

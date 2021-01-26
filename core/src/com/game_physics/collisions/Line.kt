@@ -16,6 +16,12 @@ class Line(ball1: Ball, ball2: Ball) {
         set
     var length = 0f
         set
+    var relaxLength = 100f
+
+    init {
+        ball1.addCon(this)
+        ball2.addCon(this)
+    }
 
     fun lengthUpdate()
     {
