@@ -1,10 +1,8 @@
 package com.game_physics.collisions
 
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.Input.Keys.*
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL20
-import com.game_physics.collisions.system.CollisionSystem
 
 
 class GameScreen(private val game: RestoringForceGame) : Screen {
