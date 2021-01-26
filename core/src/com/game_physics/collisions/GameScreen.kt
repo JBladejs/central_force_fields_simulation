@@ -8,14 +8,23 @@ import com.game_physics.collisions.system.CollisionSystem
 
 
 class GameScreen(private val game: RestoringForceGame) : Screen {
+
     private var ball1 = Ball(30f, Color(255, 0, 0), 20f, 350f)
+    private var ball2 = Ball(30f, Color(0, 0, 255), 300f, 100f)
+    private var line1 = Line(ball2, ball1)
 
     init {
-        println("test")
+
+        ball1.AddCon(line1)
+
     }
 
-    private fun update(delta: Float) {
-        ball1.x +=1
+    private fun update() {
+        ball1.updateLocation()
+        line1.lengthUpdate()
+        //println(line1.length)
+
+
     }
 
     override fun render(delta: Float) {
@@ -24,9 +33,11 @@ class GameScreen(private val game: RestoringForceGame) : Screen {
         with(game.renderer) {
             begin()
             ball1.render(this)
+            ball2.render(this)
+            line1.render(this)
             end()
         }
-        update(delta)
+        update()
     }
 
     override fun resize(width: Int, height: Int) {}

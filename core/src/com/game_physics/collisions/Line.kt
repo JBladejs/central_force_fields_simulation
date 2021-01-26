@@ -1,0 +1,48 @@
+package com.game_physics.collisions
+
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.math.MathUtils.cos
+import com.badlogic.gdx.math.MathUtils.sin
+import com.game_physics.collisions.system.CircleCollider
+import kotlin.math.abs
+import kotlin.math.sqrt
+
+class Line(ball1: Ball, ball2: Ball) {
+
+    var ball1 = ball1
+        set
+    var ball2 = ball2
+        set
+    var length = 0f
+        set
+
+    fun lengthUpdate()
+    {
+        //Wzór na odległość między punktami
+        length = sqrt((ball1.x - ball2.x) * (ball1.x - ball2.x) + (ball1.y - ball2.y) * (ball1.y - ball2.y))
+    }
+
+    fun getOtherEndXLocation(ball :Ball): Float
+    {
+        if(ball1 == ball)
+            return ball2.x
+        else
+            return ball1.x
+    }
+
+    fun getOtherEndYLocation(ball :Ball): Float
+    {
+        if(ball1 == ball)
+            return ball2.y
+        else
+            return ball1.y
+    }
+
+    fun render(renderer: ShapeRenderer) {
+        with(renderer) {
+            setColor(Color(255, 255, 255))
+            rectLine(ball1.x, ball1.y, ball2.x, ball2.y, 5f)
+        }
+    }
+}
